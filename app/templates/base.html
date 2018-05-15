@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{% block title %} Home {% endblock %}</title>
+  <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico">
+  <link rel="stylesheet" href="/static/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  {% block navbar %} {% endblock %}
+  {% block content %} {% endblock %}
+
+  <footer>
+    <div class="">
+      <a href="http://www.miitbeian.gov.cn" target="_blank">粤ICP备18053255号</a>
+      Powered by <a href="https://github.com/u14e/u-bbs">u14e</a>
+    </div>
+  </footer>
+
+  {% block script %} {% endblock %}
+</body>
+</html>
