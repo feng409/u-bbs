@@ -1,0 +1,27 @@
+server {
+    listen 443 ssl;
+    # 启用ssl
+    ssl on;
+    
+    server_name    bbs.u14e.xyz;
+
+    # 证书和私钥的地址  
+    ssl_certificate /var/www/u-bbs/u14exyz/full_chain.pem; 
+    ssl_certificate_key /var/www/u-bbs/u14exyz/private.key;
+
+    location /images {
+        alias /var/www/u-bbs/app/images;
+    }
+
+    location /static {
+        alias /var/www/u-bbs/app/static;
+    }
+
+    location / {
+        proxy_pass http://127.0.0.1:5000;
+        proxy_set_header host $host;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_pass_request_headers      on;
+        client_max_body_size  8m;
+    }
+}

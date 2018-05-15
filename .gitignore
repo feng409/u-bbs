@@ -1,0 +1,13 @@
+.idea/
+.vscode/
+__pycache__/
+.pytest_cache/
+.vagrant/
+ubuntu-xenial-16.04-cloudimg-console.log
+logs/
+u14exyz/
+.env
+mysql_pass
+app.db
+id_rsa
+config.py
