@@ -6,8 +6,9 @@ from app.common.model import CommonMixin
 class Topic(CommonMixin, db.Model):
     title = db.Column(db.String(120), nullable=False)
     content = db.Column(db.Text)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     views = db.Column(db.Integer, default=0)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    tab_id = db.Column(db.Integer, db.ForeignKey('tab.id'))
 
     def __repr__(self):
         return '<Topic {}>'.format(self.title)

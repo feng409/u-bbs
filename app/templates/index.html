@@ -34,7 +34,6 @@
               {{ t.title }}
             </a>
             <span>3 / {{ t.views }}</span>
-            <a class="topic_title" href="{{ url_for('topic.delete', id=t.id, token=token) }}">删除</a>
           </div>
         </div>
         {% endfor %}

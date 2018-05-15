@@ -29,6 +29,9 @@ def create_app(config_class=Config):
     from app.topic import bp as topic_bp
     app.register_blueprint(topic_bp)
 
+    from app.tab import bp as tab_bp
+    app.register_blueprint(tab_bp)
+
     from app.common import current_user
 
     @app.before_request
@@ -61,3 +64,4 @@ def create_app(config_class=Config):
 
 from app.user.model import User
 from app.topic.model import Topic
+from app.tab.model import Tab

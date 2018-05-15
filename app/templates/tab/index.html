@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %} Tab 管理页 {% endblock %}
+
+{% block content %}
+  <div id="content">
+    <div class="panel">
+      <div class="header">
+        <ul class="breadcrumb">
+          <li><a href="/">主页</a><span class="divider">/</span></li>
+          <li class="active">Tab 管理</li>
+        </ul>
+      </div>
+      <div class="inner">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-error">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        <form id="signin_form" class="form-horizontal" action="{{ url_for('.add', token=token) }}" method="post">
+          <div class="control-group">
+            <label class="control-label" for="name">Tab 名</label>
+            <div class="controls">
+              <input required class="input-xlarge" id="name" name="title" size="30" type="text">
+            </div>
+          </div>
+          <div class="form-actions">
+            <input type="submit" class="span-primary" value="提交">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
