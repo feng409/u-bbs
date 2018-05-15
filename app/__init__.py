@@ -2,10 +2,11 @@
 import logging
 from logging.handlers import RotatingFileHandler
 import os
-from flask import Flask
+from flask import Flask, g
 from config import Config, base_dir
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from app.utils import log
 
 
 db = SQLAlchemy()
@@ -27,6 +28,13 @@ def create_app(config_class=Config):
 
     from app.topic import bp as topic_bp
     app.register_blueprint(topic_bp)
+
+    from app.common import current_user
+
+    @app.before_request
+    def app_before_req():
+        g.user = current_user()
+        log('before_request current_user:', g.user)
 
     # debug模式和测试环境下不要开启
     if not app.debug and not app.testing:

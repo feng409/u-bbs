@@ -2,6 +2,6 @@
 
 from flask import Blueprint
 
-bp = Blueprint('auth', __name__)
+bp = Blueprint('user', __name__)
 
 from . import routes
