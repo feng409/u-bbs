@@ -16,14 +16,15 @@
 <div id="content">
   <div class="panel">
     <div class="header">
-      <a href="{{ url_for('.index') }}" class="topic-tab current-tab">
+      <a href="{{ url_for('.index') }}" class="topic-tab {{ '' if tab_title else 'current-tab' }}">
         全部的帖子
       </a>
-      <!-- {% for b in bs %}
-      <a href="/topic?board_id={{ b.id }}" class="topic-tab current-tab">
-        {{ b.title }}
+      {% for tab in tabs %}
+      <a href="{{ url_for('.index', tab=tab.title) }}" 
+        class="topic-tab {{ 'current-tab' if tab.title == tab_title }}">
+        {{ tab.title }}
       </a>
-      {% endfor %} -->
+      {% endfor %}
     </div>
     <div class="inner post">
       <div class="topic_list">

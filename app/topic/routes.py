@@ -14,24 +14,33 @@ from app.common import (
     login_required
 )
 from .model import Topic
+from app.tab.model import Tab
 from app.utils import log
 
 
 @bp.route('/')
 def index():
-    topic_list = Topic.find_all()
-    token = new_csrf_token()
-    if 'tab' in request.args:
-        tab = request.args.get('tab', 'all')
+    tabs = Tab.find_all()
+    if 'tab' in request.args and request.args.get('tab'):
+        tab_title = request.args.get('tab')
+        tab = Tab.find_by(title=tab_title)
+        topic_list = Topic.find_all(tab_id=tab.id)
+    else:
+        tab_title = ''
+        topic_list = Topic.find_all()
     return render_template('index.html',
                            topic_list=topic_list,
-                           token=token)
+                           tabs=tabs,
+                           tab_title=tab_title,
+                           token=new_csrf_token())
 
 
 @bp.route('/topic/add')
 def add():
     token = new_csrf_token()
-    return render_template('topic/add.html', token=token)
+    tabs = Tab.find_all()
+    return render_template('topic/add.html',
+                           token=token, tabs=tabs)
 
 
 @bp.route('/topic/add', methods=['POST'])
@@ -64,8 +73,11 @@ def delete(id):
 def edit(id):
     token = new_csrf_token()
     topic = Topic.find_by(id=id)
+    tabs = Tab.find_all()
     log('edit topic:', topic)
-    return render_template('topic/add.html', topic=topic, token=token)
+    return render_template('topic/add.html',
+                           topic=topic, token=token,
+                           tabs=tabs)
 
 
 @bp.route('/topic/update/<int:id>', methods=['POST'])

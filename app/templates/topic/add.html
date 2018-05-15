@@ -17,16 +17,16 @@
             autofocus class='span9' id='title' name='title' 
             rows='1' placeholder="填写标题" 
             required>{% if topic %}{{topic.title}}{% endif %}</textarea>
-          <!-- <span class="tab-selector">选择版块：</span>
-    <select name="board_id" id="board" required>
-        {% for b in bs %}
-            {% if bid == b.id %}
-                <option value="{{ b.id }}" selected >{{ b.title }}</option>
-            {% else %}
-                <option value="{{ b.id }}" >{{ b.title }}</option>
-            {% endif %}
-        {% endfor %}
-    </select> -->
+          <span class="tab-selector">选择版块：</span>
+          <select name="tab_id" id="board" required>
+            {% for tab in tabs %} 
+              {% if topic and topic.tab_id == tab.id %}
+              <option value="{{ tab.id }}" selected>{{ tab.title }}</option>
+              {% else %}
+              <option value="{{ tab.id }}">{{ tab.title }}</option>
+              {% endif %} 
+            {% endfor %}
+          </select>
 
           <div class='markdown_editor in_editor'>
             <div class='markdown_in_editor'>
