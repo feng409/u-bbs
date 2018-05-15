@@ -53,5 +53,5 @@ def csrf_required(func):
 def new_csrf_token():
     u = current_user()
     token = str(uuid.uuid4())
-    csrf_tokens[token] = u.id
+    csrf_tokens[token] = u.id if u else ''
     return token

@@ -36,6 +36,7 @@ def index():
 
 
 @bp.route('/topic/add')
+@login_required
 def add():
     token = new_csrf_token()
     tabs = Tab.find_all()
