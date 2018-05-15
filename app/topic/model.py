@@ -11,3 +11,11 @@ class Topic(CommonMixin, db.Model):
 
     def __repr__(self):
         return '<Topic {}>'.format(self.title)
+
+    @classmethod
+    def get(cls, id):
+        t = cls.find_by(id=id)
+        t.views += 1    # 点击数+1
+        db.session.add(t)
+        db.session.commit()
+        return t

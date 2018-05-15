@@ -1,39 +1,50 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} 
 
-{% block title %} 添加主题 {% endblock %}
+{% block title %} 添加主题 {% endblock %} 
 
 {% block content %}
 <div id="content">
-    <div class="panel">
-        <div class="inner post">
-<form id="create_topic_form" method="post" action="{{ url_for('.add', token=token) }}">
-<fieldset>
-<textarea autofocus class='span9' id='title'
-          name='title' rows='1'
-          placeholder="填写标题"></textarea>
-
-<!-- <span class="tab-selector">选择版块：</span>
-<select name="board_id" id="board" required>
-    {% for b in bs %}
-        {% if bid == b.id %}
-            <option value="{{ b.id }}" selected >{{ b.title }}</option>
+  <div class="panel">
+    <div class="inner post">
+        {% if topic %}
+          {% set action_url = url_for('.update', id=topic.id, token=token) %}
         {% else %}
-            <option value="{{ b.id }}" >{{ b.title }}</option>
+          {% set action_url = url_for('.add_post', token=token) %}
         {% endif %}
-    {% endfor %}
-</select> -->
+      <form id="create_topic_form" method="post" action="{{ action_url }}">
+        <fieldset>
+          <textarea
+            autofocus class='span9' id='title' name='title' 
+            rows='1' placeholder="填写标题" 
+            required>{% if topic %}{{topic.title}}{% endif %}</textarea>
+          <!-- <span class="tab-selector">选择版块：</span>
+    <select name="board_id" id="board" required>
+        {% for b in bs %}
+            {% if bid == b.id %}
+                <option value="{{ b.id }}" selected >{{ b.title }}</option>
+            {% else %}
+                <option value="{{ b.id }}" >{{ b.title }}</option>
+            {% endif %}
+        {% endfor %}
+    </select> -->
 
-<div class='markdown_editor in_editor'>
-  <div class='markdown_in_editor'>
-    <textarea class='editor' name='content' rows='20' placeholder='文章支持 Markdown 语法, 请注意标记代码'></textarea>
-    <div class='editor_buttons'>
-      <input type="submit" class='span-primary submit_btn' value="提交">
+          <div class='markdown_editor in_editor'>
+            <div class='markdown_in_editor'>
+              <textarea required class='editor' name='content' 
+                rows='20' 
+                placeholder='文章支持 Markdown 语法, 请注意标记代码'>{% if topic %}{{topic.content}}{% endif %}</textarea>
+              <div class='editor_buttons'>
+                {% if topic %}
+                <input type="submit" class='span-primary submit_btn' value="更新">                  
+                {% else %}
+                <input type="submit" class='span-primary submit_btn' value="提交">                    
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
     </div>
   </div>
-</div>
-</fieldset>
-</form>
-        </div>
-    </div>
 </div>
 {% endblock %}

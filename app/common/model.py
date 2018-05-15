@@ -26,3 +26,27 @@ class CommonMixin:
         db.session.add(m)
         db.session.commit()
         return m
+
+    @classmethod
+    def delete(cls, id):
+        m = cls.update(deleted=True)
+        return m
+
+    @classmethod
+    def update(cls, id, **kwargs):
+        m = cls.find_by(id=id)
+        for name, value in kwargs.items():
+            setattr(m, name, value)
+        db.session.add(m)
+        db.session.commit()
+        return m
+
+    @classmethod
+    def find_all(cls, **kwargs):
+        ms = cls.query.filter_by(deleted=False, **kwargs).all()
+        return ms
+
+    @classmethod
+    def find_by(cls, **kwargs):
+        m = cls.query.filter_by(**kwargs).first()
+        return m
