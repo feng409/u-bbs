@@ -2,10 +2,6 @@
 
 {% block title %} Login {% endblock %}
 
-{% block navbar %}
-  {% include 'navbar.html' %}
-{% endblock %}
-
 {% block content %}
   <div id="content">
     <div class="panel">
@@ -36,8 +32,6 @@
               <input required class="input-xlarge" id="pass" name="password" size="30" type="password">
             </div>
           </div>
-          <!-- <input type="hidden" name="_csrf" value="8JpCWMcN-YBOpCNPgmqFYWcepxDsva1d4X2Y"> -->
-  
           <div class="form-actions">
             <input type="submit" class="span-primary" value="登录">
             <a href="{{ url_for('user.register') }}">还没有账户?</a>

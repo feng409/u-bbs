@@ -7,7 +7,9 @@ from flask import (
     request,
     session
 )
-from app.common import current_user
+from app.common import (
+    current_user,
+)
 from . import bp
 from .model import User
 

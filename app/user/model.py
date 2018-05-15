@@ -14,10 +14,9 @@ class User(CommonMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     password = db.Column(db.String(128))
     signature = db.Column(db.Text)
+    topics = db.relationship('Topic', backref='author', lazy='dynamic')
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        # 不要存明文密码
+    def add_default_value(self):
         self.set_password(self.password)
 
     def __repr__(self):
@@ -25,18 +24,16 @@ class User(CommonMixin, db.Model):
 
     @classmethod
     def register(cls, form):
-        user = cls(**form)
-        if not len(user.username) > 2:
+        if not len(form['username']) > 2:
             return None, '用户名长度必须大于2'
-        if cls.exist(username=user.username):
+        if cls.exist(username=form['username']):
             return None, '用户已经存在'
-        if not len(user.password) > 2:
+        if not len(form['password']) > 2:
             return None, '密码太简单'
-        if not len(user.email) > 0 or not validate_email(user.email):
+        if not len(form['email']) > 0 or not validate_email(form['email']):
             return None, '邮件格式不对'
 
-        db.session.add(user)
-        db.session.commit()
+        user = User.new(**form)
         return user, '注册成功，去登录吧'
 
     @classmethod

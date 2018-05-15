@@ -33,6 +33,7 @@ def create_app(config_class=Config):
 
     @app.before_request
     def app_before_req():
+        # 每次请求获取当前，设置全局变量
         g.user = current_user()
         log('before_request current_user:', g.user)
 

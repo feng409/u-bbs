@@ -2,6 +2,7 @@ body {
   min-height: 100vh;
   padding-bottom: 30px;
   box-sizing: border-box;
+  position: relative;
 }
 footer {
   position: absolute;
@@ -11,4 +12,8 @@ footer {
   line-height: 30px;
   text-align: center;
   background-color: #fff;
+}
+#create_topic_form textarea.editor, 
+#edit_reply_form textarea.editor {
+  height: 300px;
 }

@@ -1,10 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} Login {% endblock %}
-
-{% block navbar %}
-  {% include 'navbar.html' %}
-{% endblock %}
+{% block title %} Register {% endblock %}
 
 {% block content %}
   <div id="content">
@@ -42,8 +38,6 @@
               <input required class="input-xlarge" id="pass" name="password" size="30" type="password">
             </div>
           </div>
-          <!-- <input type="hidden" name="_csrf" value="8JpCWMcN-YBOpCNPgmqFYWcepxDsva1d4X2Y"> -->
-  
           <div class="form-actions">
             <input type="submit" class="span-primary" value="注册">
             <a href="{{ url_for('user.login') }}">已有账户?去登录</a>
