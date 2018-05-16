@@ -39,6 +39,9 @@ def create_app(config_class=Config):
     from app.reply import bp as reply_bp
     app.register_blueprint(reply_bp)
 
+    from app.message import bp as message_bp
+    app.register_blueprint(message_bp, url_prefix='/message')
+
     from app.common import current_user
 
     # 添加过滤器
@@ -76,3 +79,4 @@ from app.user.model import User
 from app.topic.model import Topic
 from app.tab.model import Tab
 from app.reply.model import Reply
+from app.message.model import Message

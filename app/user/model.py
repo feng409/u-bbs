@@ -18,6 +18,12 @@ class User(CommonMixin, db.Model):
     topics = db.relationship('Topic', backref='author', lazy='dynamic')
     tabs = db.relationship('Tab', backref='author', lazy='dynamic')
     replies = db.relationship('Reply', backref='author', lazy='dynamic')
+    message_sent = db.relationship('Message',
+                                   foreign_keys='Message.sender_id',
+                                   backref='sender', lazy='dynamic')
+    message_received = db.relationship('Message',
+                                       foreign_keys='Message.receiver_id',
+                                       backref='receiver', lazy='dynamic')
 
     def add_default_value(self):
         self.set_password(self.password)

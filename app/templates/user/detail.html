@@ -33,10 +33,14 @@
           </a>
         </div>
       </div>
-      {% endfor %}
-      <div class="cell more">
-        <a class="dark" href="#">查看更多»</a>
+      {% else %}
+      <div class='cell'>
+        <p>无话题</p>
       </div>
+      {% endfor %}
+      <!--<div class="cell more">-->
+        <!--<a class="dark" href="#">查看更多»</a>-->
+      <!--</div>-->
     </div>
 
     <div class="panel">
@@ -67,10 +71,14 @@
             </a>
             </div>
         </div>
-      {% endfor %}        
-      <div class="cell more">
-        <a class="dark" href="#">查看更多»</a>
+      {% else %}
+      <div class='cell'>
+        <p>无话题</p>
       </div>
+      {% endfor %}        
+      <!--<div class="cell more">-->
+        <!--<a class="dark" href="#">查看更多»</a>-->
+      <!--</div>-->
     </div>
   </div>
 {% endblock %}
