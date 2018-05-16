@@ -13,6 +13,7 @@ from app.common import (
     login_required
 )
 from .model import Reply
+from app.topic.model import Topic
 from app.utils import log
 
 
@@ -22,7 +23,8 @@ from app.utils import log
 def add():
     form = request.form.to_dict()
     u = current_user()
-    tab = Reply.new(user_id=u.id, **form)
+    reply = Reply.new(user_id=u.id, **form)
+    Topic.update(reply.topic_id)
     return redirect(url_for('topic.detail', id=form['topic_id']))
 
 

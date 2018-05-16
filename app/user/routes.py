@@ -5,7 +5,8 @@ from flask import (
     redirect,
     url_for,
     request,
-    session
+    session,
+    abort
 )
 from app.common import (
     current_user,
@@ -58,3 +59,10 @@ def register():
     else:
         return render_template('user/register.html')
 
+
+@bp.route('/user/<username>')
+def user(username):
+    u = User.find_by(username=username)
+    if not u:
+        abort(404)
+    return render_template('user/detail.html', user=u)

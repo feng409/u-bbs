@@ -13,9 +13,10 @@
           {{ topic.title }}
         </span>
         <div class="changes">
-          <span>发布于 2 天前</span>
+          <span>发布于 {{ topic.created_time | moment }}</span>
           <span>
-            作者{{ topic.author.username }}
+            作者
+            <a href="{{ url_for('user.user', username=topic.author.username) }}">{{ topic.author.username }}</a>
           </span>
           <span>
             {{ topic.views }} 次浏览
@@ -51,7 +52,7 @@
       {% set u = r.author %}
       <div class='cell reply_area reply_item'>
         <div class='user_info'>
-          <a class='dark reply_author' href="{{ url_for('user.register', username=u.username) }}">
+          <a class='dark reply_author' href="{{ url_for('user.user', username=u.username) }}">
             {{ u.username }}
           </a>
           <a class="reply_time">

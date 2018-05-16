@@ -21,3 +21,7 @@ class Topic(CommonMixin, db.Model):
         db.session.add(t)
         db.session.commit()
         return t
+
+    def retries_true(self):
+        from app.reply.model import Reply
+        return Reply.query.filter_by(deleted=False, topic_id=self.id).all()

@@ -65,3 +65,14 @@ class User(CommonMixin, db.Model):
         gravatar_url = 'https://www.gravatar.com/avatar'
         return '{}/{}?d=retro&s={}'.format(gravatar_url, digest, size)
 
+    def recent_create_topics(self):
+        from app.topic.model import Topic
+        topics = Topic.query.filter_by(deleted=False, user_id=self.id)\
+            .order_by(Topic.updated_time.desc()).all()
+        return topics
+
+    def recent_join_topics(self):
+        from app.topic.model import Topic
+        topics = Topic.query.filter_by(deleted=False, user_id=self.id)\
+            .order_by(Topic.updated_time.desc()).all()
+        return topics

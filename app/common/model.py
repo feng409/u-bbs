@@ -6,8 +6,8 @@ import time
 class CommonMixin:
     id = db.Column(db.Integer, primary_key=True)
     deleted = db.Column(db.Boolean, nullable=False, default=False)
-    created_time = db.Column(db.Integer, default=time.time)
-    updated_time = db.Column(db.Integer, onupdate=True, default=time.time)
+    created_time = db.Column(db.Float, default=time.time)
+    updated_time = db.Column(db.Float, default=time.time)
 
     def add_default_value(self):
         pass
@@ -37,6 +37,7 @@ class CommonMixin:
         m = cls.find_by(id=id)
         for name, value in kwargs.items():
             setattr(m, name, value)
+        m.updated_time = time.time()
         db.session.add(m)
         db.session.commit()
         return m

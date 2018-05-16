@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ user.username }}的主页 {% endblock %}
+
+
+{% block content %}
+  <div id="content">
+    <div class="panel">
+      <div class="header">
+        <span class="col_fade">最近创建的话题</span>
+      </div>
+      {% for create_topic in user.recent_create_topics() %}
+      <div class="cell">
+        <a class="user_avatar pull-left" href="{{ url_for('user.user', username=user.username) }}">
+          <img src="{{ user.image }}">
+        </a>
+        <span class="reply_count pull-left">
+          <span class="count_of_replies" title="回复数">
+            {{ create_topic.retries_true() | count }}
+          </span>
+          <span class="count_seperator">/</span>
+          <span class="count_of_visits" title="点击数">
+            {{ create_topic.views }}
+          </span>
+        </span>
+        <a class="user_avatar last_time pull-right" href="{{ url_for('topic.detail', id=create_topic.id) }}">
+          <img src="{{ user.image }}">
+          <span class="last_active_time">{{ create_topic.updated_time | moment }}</span>
+        </a>
+        <div class="topic_title_wrapper">
+          <a class="topic_title" href="{{ url_for('topic.detail', id=create_topic.id) }}" title="做了个Nodejs敏感词过滤器">
+            {{ create_topic.title }}
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+      <div class="cell more">
+        <a class="dark" href="#">查看更多»</a>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="header">
+        <span class="col_fade">最近参与的话题</span>
+      </div>
+      {% for join_topic in user.recent_join_topics() %}        
+        <div class="cell">
+          <a class="user_avatar pull-left" href="{{ url_for('user.user', username=user.username) }}">
+            <img src="{{ user.image }}">
+          </a>
+          <span class="reply_count pull-left">
+            <span class="count_of_replies" title="回复数">
+              {{ join_topic.retries_true() | count }}
+            </span>
+            <span class="count_seperator">/</span>
+            <span class="count_of_visits" title="点击数">
+              {{ join_topic.views }}
+            </span>
+          </span>
+          <a class="user_avatar last_time pull-right" href="{{ url_for('topic.detail', id=join_topic.id) }}">
+            <img src="{{ user.image }}">
+            <span class="last_active_time">{{ join_topic.updated_time | moment }}</span>
+          </a>
+          <div class="topic_title_wrapper">
+            <a class="topic_title" href="{{ url_for('topic.detail', id=join_topic.id) }}" title="做了个Nodejs敏感词过滤器">
+              {{ join_topic.title }}
+            </a>
+            </div>
+        </div>
+      {% endfor %}        
+      <div class="cell more">
+        <a class="dark" href="#">查看更多»</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

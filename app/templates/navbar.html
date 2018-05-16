@@ -7,7 +7,7 @@
         {% if g.user %}
         <li><a href='/setting'>设置</a></li>   
         <li><a href='/message'>我的消息</a></li>
-        <li><a href='/user'>{{ g.user.username }}</a></li>
+        <li><a href='{{ url_for('user.user',username=g.user.username) }}'>{{ g.user.username }}</a></li>
         <li><a href='{{ url_for('user.logout') }}'>退出</a></li>        
         {% else %}
         <li><a href='{{ url_for('user.register') }}'>注册</a></li>
