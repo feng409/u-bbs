@@ -11,3 +11,4 @@ mysql_pass
 app.db
 id_rsa
 config.py
+*.pyc

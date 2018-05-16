@@ -15,10 +15,9 @@
 
 ## 第一次部署
 - 创建数据库 `python3.6 reset.py`
-- 执行迁徙脚本 `flask db upgrade`
 
 ## 后面部署
-- 执行迁徙脚本 `flask db upgrade`
+- 执行数据库迁徙脚本 `flask db upgrade`(先`set FLASK_APP=main.py`)
 
 
 ## 开发记录

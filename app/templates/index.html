@@ -41,6 +41,8 @@
             <span>{{ t.retries_true() | count }} / {{ t.views }}</span>
           </div>
         </div>
+        {% else %}
+        <p>无话题</p>
         {% endfor %}
       </div>
     </div>
