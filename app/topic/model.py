@@ -25,3 +25,11 @@ class Topic(CommonMixin, db.Model):
     def retries_true(self):
         from app.reply.model import Reply
         return Reply.query.filter_by(deleted=False, topic_id=self.id).all()
+
+    def last_reply(self):
+        """
+        最后一个回复
+        """
+        from app.reply.model import Reply
+        reply = Reply.query.filter_by(deleted=False).order_by(Reply.id.desc()).first()
+        return reply

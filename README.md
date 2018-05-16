@@ -14,6 +14,7 @@
 - `mysql_pass` 安装mysql时，需要输入的密码
 
 ## 第一次部署
+- 执行`bash -ex setup.sh`安装依赖
 - 创建数据库 `python3.6 reset.py`
 
 ## 后面部署

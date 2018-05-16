@@ -34,11 +34,28 @@
       <div class="topic_list">
         {% for t in topic_list %}
         <div class="cell">
+          <a class="user_avatar pull-left" href="{{ url_for('user.user', username=t.author.username) }}">
+            <img src="{{ t.author.image }}">
+          </a>
+          <span class="reply_count pull-left">
+            <span class="count_of_replies" title="回复数">
+                {{ t.retries_true() | count }}
+            </span>
+            <span class="count_seperator">/</span>
+            <span class="count_of_visits" title="点击数">
+                {{ t.views }}
+            </span>
+          </span>
+          <a class="last_time pull-right" href="{{ url_for('topic.detail', id=t.id) }}">
+            {% if t.last_reply() %}
+            <img class="user_small_avatar" src="t.last_reply().author.image">
+            {% endif %}
+            <span class="last_active_time">{{ t.updated_time | moment }}</span>
+          </a>
           <div class="topic_title_wrapper">
             <a class="topic_title" href="{{ url_for('topic.detail', id=t.id) }}">
               {{ t.title }}
             </a>
-            <span>{{ t.retries_true() | count }} / {{ t.views }}</span>
           </div>
         </div>
         {% else %}

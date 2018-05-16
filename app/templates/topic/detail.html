@@ -51,6 +51,13 @@
       {% for r in replies %} 
       {% set u = r.author %}
       <div class='cell reply_area reply_item'>
+        <div class="author_content">
+
+        </div>
+          <a href="{{ url_for('user.user', username=u.username) }}" class="user_avatar">
+            <img src="{{ u.image }}" >
+          </a>
+      
         <div class='user_info'>
           <a class='dark reply_author' href="{{ url_for('user.user', username=u.username) }}">
             {{ u.username }}
