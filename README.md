@@ -4,9 +4,9 @@
 
 - 创建数据库 `python reset.py`
 - 创建迁徙脚本仓库并提交第一次版本
-    `flask db init`
-    `flask db migrate -m "init commit"`
-    `flask db upgrade`
+    `flask db init`  
+    `flask db migrate -m "init commit"`  
+    `flask db upgrade`  
 
 ## 需要手动上传的
 - `u14exyz` 证书
@@ -29,3 +29,4 @@
 - [x] 评论
 - [x] 修改用户信息：用户名，密码，头像上传
 - [x] 用户主页
+- [x] 站内消息
