@@ -17,3 +17,7 @@ footer {
 #edit_reply_form textarea.editor {
   height: 300px;
 }
+textarea.reply-editor {
+  height: 60px;
+  margin-bottom: 10px;
+}

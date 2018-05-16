@@ -41,9 +41,55 @@
       </div>
     </div>
 
-    
+    <div class='panel'>
+      <div class='header'>
+        <span class='col_fade'>
+          {{ replies | count }} 回复
+        </span>
+      </div>
+      {% for r in replies %} 
+      {% set u = r.author %}
+      <div class='cell reply_area reply_item'>
+        <div class='user_info'>
+          <a class='dark reply_author' href="{{ url_for('user.register', username=u.username) }}">
+            {{ u.username }}
+          </a>
+          <a class="reply_time">
+            {{ loop.index }}楼 / {{ loop.length }}楼 •
+            <span class="gua-time">{{ r.created_time | moment }}</span>
+          </a>
+        </div>
+        <div class='user_action'>
+          {% if g.user and (g.user.id == u.id or g.user.id == topic.author.id ) %}
+          <a href="{{ url_for('reply.delete', id=r.id, topic_id=topic.id, token=token) }}" class='delete_reply_btn'>
+            删除
+          </a>
+          {% endif %}
+        </div>
+        <div class='reply_content from-leiwei1991'>
+          <div class="markdown-text">{{ r.content | safe }}</div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class='panel'>
+      <div class='header'>
+        <span class='col_fade'>
+          添加回复
+        </span>
+      </div>
+      <div class="cell">
+        <form action="{{ url_for('reply.add', token=token) }}" method="post">
+          <input type="hidden" name="topic_id" value="{{ topic.id }}">
+          <textarea required class="reply-editor editor" name="content" size="30"></textarea>
+          <button type="submit" class="span-primary submit_btn">添加回复</button>
+        </form>
+      </div>
+    </div>
+
   </div>
-  {% endblock %} 
+{% endblock %} 
 
 {% block script %}
   <script src="https://cdn.bootcss.com/marked/0.3.19/marked.min.js"></script>
@@ -65,9 +111,9 @@
       var contentDivs = es('.markdown-text')
       for (var i = 0; i < contentDivs.length; i++) {
         var contentDiv = contentDivs[i]
-        console.log('pre marked', contentDiv.textContent, contentDiv.innerHTML)
+        // console.log('pre marked', contentDiv.textContent, contentDiv.innerHTML)
         var content = marked(contentDiv.textContent)
-        console.log('after marked', content)
+        // console.log('after marked', content)
         contentDiv.innerHTML = content
       }
     }
@@ -77,24 +123,9 @@
       Prism.plugins.autoloader.languages_path = 'https://cdn.bootcss.com/prism/1.13.0/components/'
     }
 
-    var registerTimer = function () {
-      setInterval(function () {
-        var times = es('.gua-time')
-        for (var i = 0; i < times.length; i++) {
-          var t = times[i]
-          var time = Number(t.dataset.created_time)
-          var now = Math.floor(new Date() / 1000)
-          var delta = now - time
-          var s = `${delta} 秒前`
-          t.innerText = s
-        }
-      }, 1000)
-    }
-
     var __main = function () {
       markContents()
       highlight()
-      registerTimer()
     }
 
     __main()

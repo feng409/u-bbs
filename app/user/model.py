@@ -16,6 +16,7 @@ class User(CommonMixin, db.Model):
     signature = db.Column(db.Text)
     topics = db.relationship('Topic', backref='author', lazy='dynamic')
     tabs = db.relationship('Tab', backref='author', lazy='dynamic')
+    replies = db.relationship('Reply', backref='author', lazy='dynamic')
 
     def add_default_value(self):
         self.set_password(self.password)

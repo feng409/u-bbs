@@ -9,6 +9,7 @@ class Topic(CommonMixin, db.Model):
     views = db.Column(db.Integer, default=0)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     tab_id = db.Column(db.Integer, db.ForeignKey('tab.id'))
+    replies = db.relationship('Reply', backref='topics', lazy='dynamic')
 
     def __repr__(self):
         return '<Topic {}>'.format(self.title)

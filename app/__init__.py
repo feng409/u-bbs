@@ -6,7 +6,7 @@ from flask import Flask, g
 from config import Config, base_dir
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from app.utils import log
+from app.utils import log, moment
 
 
 db = SQLAlchemy()
@@ -14,12 +14,16 @@ migrate = Migrate()
 
 
 def create_app(config_class=Config):
+    # flask实例化
     app = Flask(__name__)
+    # 配置
     app.config.from_object(config_class)
 
+    # 插件
     db.init_app(app)
     migrate.init_app(app, db)
 
+    # 蓝图
     from app.errors import bp as errors_bp
     app.register_blueprint(errors_bp)
 
@@ -32,11 +36,17 @@ def create_app(config_class=Config):
     from app.tab import bp as tab_bp
     app.register_blueprint(tab_bp)
 
+    from app.reply import bp as reply_bp
+    app.register_blueprint(reply_bp)
+
     from app.common import current_user
+
+    # 添加过滤器
+    app.add_template_filter(moment)
 
     @app.before_request
     def app_before_req():
-        # 每次请求获取当前，设置全局变量
+        # 每次请求获取当前用户，设置全局变量
         g.user = current_user()
         log('before_request current_user:', g.user)
 
@@ -65,3 +75,4 @@ def create_app(config_class=Config):
 from app.user.model import User
 from app.topic.model import Topic
 from app.tab.model import Tab
+from app.reply.model import Reply

@@ -15,6 +15,7 @@ from app.common import (
 )
 from .model import Topic
 from app.tab.model import Tab
+from app.reply.model import Reply
 from app.utils import log
 
 
@@ -57,8 +58,11 @@ def add_post():
 @bp.route('/topic/<int:id>')
 def detail(id):
     t = Topic.get(id)
+    replies = Reply.find_all(topic_id=t.id)
     token = new_csrf_token()
-    return render_template('topic/detail.html', token=token, topic=t)
+    return render_template('topic/detail.html',
+                           token=token,
+                           topic=t, replies=replies)
 
 
 @bp.route('/topic/delete/<int:id>')

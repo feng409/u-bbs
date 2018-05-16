@@ -27,3 +27,27 @@ def format_time(timestamp):
 def validate_email(email):
     return re.match(r'^[\w-]+(\.[\w-]+){0,4}@[\w-]+(\.[\w-]+){1,4}$', email)
 
+
+class Elapse:
+    minute = 60
+    hour = 60 * 60
+    day = 60 * 60 * 24
+
+
+def moment(passed):
+    """
+    xxx秒前
+    :param passed: time.time()
+    :return: str xxx[秒分时天]
+    """
+    now = time.time()
+    elapse = now - passed
+    if elapse < Elapse.minute:
+        word = '{}秒前'.format(int(elapse))
+    elif Elapse.minute < elapse < Elapse.hour:
+        word = '{}分钟前'.format(int(elapse / Elapse.minute))
+    elif Elapse.hour < elapse < Elapse.day:
+        word = '{}小时前'.format(int(elapse / Elapse.hour))
+    else:
+        word = '{}天前'.format(int(elapse / Elapse.day))
+    return word

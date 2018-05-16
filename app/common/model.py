@@ -29,7 +29,7 @@ class CommonMixin:
 
     @classmethod
     def delete(cls, id):
-        m = cls.update(deleted=True)
+        m = cls.update(id=id, deleted=True)
         return m
 
     @classmethod
