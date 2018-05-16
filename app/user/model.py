@@ -14,12 +14,14 @@ class User(CommonMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     password = db.Column(db.String(128))
     signature = db.Column(db.Text)
+    image = db.Column(db.String(250))
     topics = db.relationship('Topic', backref='author', lazy='dynamic')
     tabs = db.relationship('Tab', backref='author', lazy='dynamic')
     replies = db.relationship('Reply', backref='author', lazy='dynamic')
 
     def add_default_value(self):
         self.set_password(self.password)
+        self.image = self.avatar()
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -59,7 +61,13 @@ class User(CommonMixin, db.Model):
         """
         return check_password_hash(self.password, password)
 
-    def avatar(self, size):
+    def change_password(self, new_pass):
+        """
+        修改密码
+        """
+        User.update(self.id, password=generate_password_hash(new_pass))
+
+    def avatar(self, size=48):
         b = self.email.lower().encode('utf-8')
         digest = md5(b).hexdigest()
         gravatar_url = 'https://www.gravatar.com/avatar'

@@ -4,8 +4,8 @@ from flask import (
     flash,
     redirect,
     url_for,
-    request
-)
+    request,
+    send_from_directory)
 from . import bp
 from app.common import (
     current_user,
@@ -92,3 +92,8 @@ def update(id):
     form = request.form.to_dict()
     Topic.update(id, **form)
     return redirect(url_for('.detail', id=id))
+
+
+@bp.route('/images/<filename>')
+def image(filename):
+    return send_from_directory('images', filename)

@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %} 设置 {% endblock %}
+
+{% block content %}
+  <div id="sidebar">
+      {% include 'userbar.html' %}
+  </div>
+  <div id="content">
+    <!-- 设置 start -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-error">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <div class="panel">
+      <div class="header">
+        <ul class="breadcrumb">
+          <li><a href="/">主页</a><span class="divider">/</span></li>
+          <li class="active">设置</li>
+        </ul>
+      </div>
+      <div class="inner">
+        <form class="form-horizontal" action="{{ url_for('user.change_info', token=token) }}" method="post">
+          <div class="control-group">
+            <label class="control-label" for="name">用户名</label>
+            <div class="controls">
+              <input required class="input-xlarge" id="name" name="username" size="30" type="text" value="{{ g.user.username }}">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="signature">个性签名</label>
+            <div class="controls">
+              <textarea required class="input-xlarge" id="signature" name="signature" size="30">{{ g.user.signature | default('', true) }}</textarea>
+            </div>
+          </div>
+          <div class="form-actions">
+            <input type="submit" class="span-primary submit_btn" value="保存设置">
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- 设置 end -->
+
+    <!-- 更改密码 start -->
+    <div class="panel">
+      <div class="header">
+        <span class="col_fade">更改密码</span>
+      </div>
+      <div class="inner">
+        <form class="form-horizontal" action="{{ url_for('user.change_password', token=token) }}" method="post">
+          <div class="control-group">
+            <label class="control-label">当前密码</label>
+            <div class="controls">
+              <input class="input-xlarge" type="password" name="old_pass" size="30">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">新密码</label>
+            <div class="controls">
+              <input class="input-xlarge" type="password" name="new_pass" size="30">
+            </div>
+          </div>
+          <div class="form-actions">
+            <input type="submit" class="span-primary submit_btn" value="更改密码">
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- 更改密码 end -->
+
+    <!-- 上传头像 start -->
+    <div class="panel">
+      <div class="header">
+        <span class="col_fade">上传头像</span>
+      </div>
+      <div class="inner">
+        <form class="form-horizontal" 
+          action="{{ url_for('user.image_add') }}" 
+          method="post" 
+          enctype="multipart/form-data"
+        >
+          <div class="control-group">
+            <label class="control-label">点击上传</label>
+            <div class="controls">
+              <input class="input-xlarge" type="file" name="avatar">
+            </div>
+          </div>
+          <div class="form-actions">
+            <input type="submit" class="span-primary submit_btn" value="上传头像">
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- 上传头像 end -->
+  </div>
+{% endblock %}

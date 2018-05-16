@@ -2,13 +2,7 @@
 
 {% block content %}
 <div id="sidebar">
-  <div class="panel">
-    <div class="inner">
-      <a href="{{ url_for('user.login') }}">
-        <span class="span-info">登录</span>
-      </a>
-    </div>
-  </div>
+  {% include 'userbar.html' %}
   {% if g.user %}
   <!-- 发布话题栏 start -->
   <div class="panel">

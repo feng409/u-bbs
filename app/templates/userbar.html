@@ -1,0 +1,31 @@
+<!-- 个人信息栏 start -->
+<div class="panel">
+  <div class="header">
+    <span class="col_fade">个人信息</span>
+  </div>
+  {% if g.user %}
+  <div class="inner">
+    <div class="user_card">
+      <div>
+        <a class="user_avatar" href="{{ url_for('user.user', username=g.user.username) }}">
+          <img src="{{ g.user.image }}">
+        </a>
+        <span class="user_name">
+          <a class="dark" href="{{ url_for('user.user', username=g.user.username) }}">{{ g.user.username }}</a>
+        </span>
+        <div class="space clearfix"></div>
+        <span class="signature">
+          “ {{ g.user.signature }} ”
+        </span>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <div class="inner">
+    <a href="{{ url_for('user.login') }}">
+      <span class="span-info">登录</span>
+    </a>
+  </div>
+  {% endif %}  
+</div>
+<!-- 个人信息栏 end -->
