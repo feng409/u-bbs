@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     # 切换为root用户运行
     sudo su
-    bash -ex /var/www/u-bbs/setup.sh
-    # bash -ex /var/www/u-bbs/restart.sh
+    # bash -ex /var/www/u-bbs/setup.sh
+    bash -ex /var/www/u-bbs/restart.sh
   SHELL
 end

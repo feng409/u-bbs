@@ -2,7 +2,7 @@
 from app import create_app, db
 from sqlalchemy import create_engine
 from config import Config
-from utils import log
+from app.utils import log
 
 
 def create_database(app):

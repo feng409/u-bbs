@@ -1,6 +1,7 @@
 # coding: utf-8
 import time
 import re
+import os
 
 
 def log(*args, **kwargs):
@@ -10,6 +11,12 @@ def log(*args, **kwargs):
     """
     format_date = format_time(time.time())
     print('[{}]'.format(format_date), *args, **kwargs)
+
+    if not os.path.exists('logs'):
+        os.mkdir('logs')
+    path = os.path.join('logs', 'log.text')
+    with open(path, 'at', encoding='utf-8') as fout:
+        print('[{}]'.format(format_date), *args, file=fout, **kwargs)
 
 
 def format_time(timestamp):

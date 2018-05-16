@@ -41,8 +41,10 @@ def csrf_required(func):
     def wrapper_func(*args, **kwargs):
         token = request.args.get('token')
         u = current_user()
+        log('csrf_required tokens-{}; token-{}; user_id={}'.format(csrf_tokens, token, u.id))
         if token in csrf_tokens and csrf_tokens[token] == u.id:
             csrf_tokens.pop(token)
+            log('pop csrf_token: {}'.format(token))
             return func(*args, **kwargs)
         else:
             abort(401)
@@ -54,4 +56,5 @@ def new_csrf_token():
     u = current_user()
     token = str(uuid.uuid4())
     csrf_tokens[token] = u.id if u else ''
+    log('new_csrf_token: {}'.format(token))
     return token
