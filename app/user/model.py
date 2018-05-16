@@ -74,13 +74,24 @@ class User(CommonMixin, db.Model):
         return '{}/{}?d=retro&s={}'.format(gravatar_url, digest, size)
 
     def recent_create_topics(self):
+        """
+        创建的主题
+        """
         from app.topic.model import Topic
         topics = Topic.query.filter_by(deleted=False, user_id=self.id)\
             .order_by(Topic.updated_time.desc()).all()
         return topics
 
     def recent_join_topics(self):
+        """
+        参与的主题，只有回复主题才有效
+        """
         from app.topic.model import Topic
-        topics = Topic.query.filter_by(deleted=False, user_id=self.id)\
-            .order_by(Topic.updated_time.desc()).all()
+        from app.reply.model import Reply
+        query = Topic.query.join(
+            Reply, Topic.id == Reply.topic_id).filter(
+            Reply.user_id == self.id).filter_by(
+            deleted=False).order_by(
+            Topic.updated_time.desc())
+        topics = query.all()
         return topics

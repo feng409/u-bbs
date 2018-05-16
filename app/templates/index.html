@@ -38,7 +38,7 @@
             <a class="topic_title" href="{{ url_for('topic.detail', id=t.id) }}">
               {{ t.title }}
             </a>
-            <span>3 / {{ t.views }}</span>
+            <span>{{ t.retries_true() | count }} / {{ t.views }}</span>
           </div>
         </div>
         {% endfor %}
