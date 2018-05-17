@@ -57,4 +57,5 @@ def moment(passed):
         word = '{}小时前'.format(int(elapse / Elapse.hour))
     else:
         word = '{}天前'.format(int(elapse / Elapse.day))
+    log('{} - {} = {}'.format(now, passed, word))
     return word

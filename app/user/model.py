@@ -36,12 +36,14 @@ class User(CommonMixin, db.Model):
     def register(cls, form):
         if not len(form['username']) > 2:
             return None, '用户名长度必须大于2'
-        if cls.exist(username=form['username']):
-            return None, '用户已经存在'
         if not len(form['password']) > 2:
             return None, '密码太简单'
         if not len(form['email']) > 0 or not validate_email(form['email']):
             return None, '邮件格式不对'
+        if cls.exist(username=form['username']):
+            return None, '用户已经存在'
+        if cls.exist(email=form['email']):
+            return None, '邮件已经被使用'
 
         user = User.new(**form)
         return user, '注册成功，去登录吧'
