@@ -37,24 +37,34 @@ csrf_tokens = dict()
 
 
 def csrf_required(func):
+    """
+    判断通过get请求的token和session里面的token是否一致
+    """
     @wraps(func)
     def wrapper_func(*args, **kwargs):
-        token = request.args.get('token')
-        u = current_user()
-        log('csrf_required tokens-{}; token-{}; user_id={}'.format(csrf_tokens, token, u.id))
-        if token in csrf_tokens and csrf_tokens[token] == u.id:
-            csrf_tokens.pop(token)
-            log('pop csrf_token: {}'.format(token))
-            return func(*args, **kwargs)
+        log('session:', session)
+        log('request.args:', request.args)
+        if 'token' in session and 'token' in request.args:
+            token_session = session['token']
+            token_get = request.args['token']
+            log('csrf_required: get({}), session({})'.format(token_get,
+                                                             token_session))
+            if token_get == token_session:
+                return func(*args, **kwargs)
+            else:
+                abort(401)
         else:
+            log('csrf_required:', '无token')
             abort(401)
 
-    return wrapper_func
+    return wrapper_func    
 
 
 def new_csrf_token():
-    u = current_user()
-    token = str(uuid.uuid4())
-    csrf_tokens[token] = u.id if u else ''
-    log('new_csrf_token: {}'.format(token))
-    return token
+    """
+    使用session存csrf_token，并将其返回给客户端
+    """
+    token_session = str(uuid.uuid4())
+    session['token'] = token_session
+    log('new_csrf_token:', token_session)
+    return token_session

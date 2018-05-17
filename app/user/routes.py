@@ -18,27 +18,28 @@ from app.common import (
 )
 from . import bp
 from .model import User
-from config import base_dir
 
 
-@bp.route('/login', methods=['GET', 'POST'])
+@bp.route('/login')
 def login():
     user = current_user()
     if user:
         return redirect('/')
+    return render_template('user/login.html', token=new_csrf_token())
 
-    if request.method == 'POST':
-        form = request.form
-        u = User.validate_login(form.to_dict())
-        if u is not None:
-            session['user_id'] = u.id
-            session.permanent = True
-            return redirect('/')
-        else:
-            flash('用户名或密码错误')
-            return redirect(url_for('.login'))
+
+@bp.route('/login', methods=['POST'])
+@csrf_required
+def login_post():
+    form = request.form
+    u = User.validate_login(form.to_dict())
+    if u is not None:
+        session['user_id'] = u.id
+        session.permanent = True
+        return redirect('/')
     else:
-        return render_template('user/login.html')
+        flash('用户名或密码错误')
+        return redirect(url_for('.login'))
 
 
 @bp.route('/logout')
@@ -48,22 +49,22 @@ def logout():
     return redirect(url_for('.login'))
 
 
-@bp.route('/register', methods=['GET', 'POST'])
+@bp.route('/register',)
 def register():
     user = current_user()
     if user:
         return redirect('/')
 
-    if request.method == 'POST':
-        form = request.form
-        u, result = User.register(form.to_dict())
-        flash(result)
-        if u is not None:
-            return redirect(url_for('.register'))
-        else:
-            return render_template('user/register.html')
-    else:
-        return render_template('user/register.html')
+    return render_template('user/register.html', token=new_csrf_token())
+
+
+@bp.route('/register', methods=['POST'])
+@csrf_required
+def register_post():
+    form = request.form
+    u, result = User.register(form.to_dict())
+    flash(result)
+    return redirect(url_for('.register'))
 
 
 @bp.route('/user/<username>')

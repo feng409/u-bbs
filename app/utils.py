@@ -10,7 +10,7 @@ def log(*args, **kwargs):
     [2018/05/12 21:16:58] ...
     """
     format_date = format_time(time.time())
-    print('[{}]'.format(format_date), *args, **kwargs)
+    # print('[{}]'.format(format_date), *args, **kwargs)
 
     if not os.path.exists('logs'):
         os.mkdir('logs')
