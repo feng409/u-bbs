@@ -2,7 +2,7 @@
 import logging
 from logging.handlers import RotatingFileHandler
 import os
-from flask import Flask, g
+from flask import Flask, g, request
 from config import Config, base_dir
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -51,6 +51,11 @@ def create_app(config_class=Config):
     def app_before_req():
         # 每次请求获取当前用户，设置全局变量
         g.user = current_user()
+        # log('='*20)
+        # log('remote address and user:', request.remote_addr, request.remote_user)
+        # log('x-real-ip:', request.headers['x-real-ip'])
+        # log('x-forwarded-for:', request.headers['x-forwarded-for'])
+        # log('=' * 20)
         log('before_request current_user:', g.user)
 
     # debug模式和测试环境下不要开启
